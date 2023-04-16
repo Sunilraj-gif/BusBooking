@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Bus Reservation</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<h1>Bus Reservation</h1>
+	<div class="button-container">
+		<button id="book-tickets-btn" onclick="document.location='form.html'">Book tickets</button>
+            <button id="bus-details-btn" onclick="getData()">Bus details</button>
+	</div>
+
+
+	<div id="container"></div>
+
+
+    <script>
+        const getData = () =>{
+            fetch('http://localhost:8000/allBusData').then(res=>res.json())
+        .then(data=>{
+            console.log(data.busData.length)
+            var container = document.getElementById("container");
+
+		
+		var listElement = document.createElement("ul");
+        data.busData.forEach(element=>{
+            console.log(element)
+            var busName = document.createElement("h2")
+            var listItemElement = document.createElement("li");
+            var route = document.createElement("li");
+            var time = document.createElement("li");
+            var price = document.createElement("li");
+
+		
+			busName.innerHTML = "BusName : " + element['busName'];
+            route.innerHTML = "Route : "+ element['route'];
+            time.innerHTML ="Time : "+ element['time'];
+            price.innerHTML = "Price : "+ element['price'];
+            listItemElement.innerHTML = "Seat : "+ element['seat'];
+
+		
+            listElement.appendChild(busName)
+            listElement.appendChild(route)
+            listElement.appendChild(time)
+            listElement.appendChild(price)
+			listElement.appendChild(listItemElement);
+        })
+
+		container.appendChild(listElement);
+        })
+        }
+    </script>
+
+</body>
+</html>
